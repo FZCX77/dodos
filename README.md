@@ -1,3 +1,8 @@
 # dodos
-buat gabut aj mek, klo lu sultan kuota
-nah nih sc cocok tuh buat ngabisin kuota lu🗿🗿🗿
+
+pkg update && pkg upgrade
+pkg install python
+pip install requests
+git clone https://github.com/FZCX77/dodos
+cd FZCX77
+python dodos.py
