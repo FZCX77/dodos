@@ -8,6 +8,6 @@ pip install requests
 
 git clone https://github.com/FZCX77/dodos
 
-cd FZCX77
+cd dodos
 
 python dodos.py
